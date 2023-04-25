@@ -1,7 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using BusStation.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<CourseDBContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CourseDB")));
 
 var app = builder.Build();
 

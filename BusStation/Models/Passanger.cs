@@ -20,15 +20,15 @@ namespace BusStation.Models
         public string Patronymic { get; set; }
 
         [Display(Name = "Серия паспорта")]
-        [MinLength(4)]
-        [MaxLength(4)]
+        [Range(0001, 9999, ErrorMessage = "Серия паспорта должен содержать 6 цифр")]
         public int PassportSeries { get; set; }
 
         [Display(Name = "Номер паспорта")]
-        [MinLength(6)]
-        [MaxLength(6)]
+        [Range(000001, 999999, ErrorMessage = "Номер паспорта должен содержать 6 цифр")]
         public int PassportNumber { get; set; }
 
+        [Display(Name = "Дата рождения")]
+        [DataType(DataType.Date)]
         public DateTime DateOfBird { get; set; }
         //Сделать невидимым
         public string? Email { get; set; }

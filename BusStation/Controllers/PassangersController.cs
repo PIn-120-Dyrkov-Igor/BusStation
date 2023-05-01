@@ -21,20 +21,20 @@ namespace BusStation.Controllers
         // GET: Passangers
         public async Task<IActionResult> Index()
         {
-              return _context.Passers != null ? 
-                          View(await _context.Passers.ToListAsync()) :
-                          Problem("Entity set 'CourseDBContext.Passers'  is null.");
+              return _context.Passangers != null ? 
+                          View(await _context.Passangers.ToListAsync()) :
+                          Problem("Entity set 'CourseDBContext.Passangers'  is null.");
         }
 
         // GET: Passangers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Passers == null)
+            if (id == null || _context.Passangers == null)
             {
                 return NotFound();
             }
 
-            var passanger = await _context.Passers
+            var passanger = await _context.Passangers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (passanger == null)
             {
@@ -69,12 +69,12 @@ namespace BusStation.Controllers
         // GET: Passangers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Passers == null)
+            if (id == null || _context.Passangers == null)
             {
                 return NotFound();
             }
 
-            var passanger = await _context.Passers.FindAsync(id);
+            var passanger = await _context.Passangers.FindAsync(id);
             if (passanger == null)
             {
                 return NotFound();
@@ -120,12 +120,12 @@ namespace BusStation.Controllers
         // GET: Passangers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Passers == null)
+            if (id == null || _context.Passangers == null)
             {
                 return NotFound();
             }
 
-            var passanger = await _context.Passers
+            var passanger = await _context.Passangers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (passanger == null)
             {
@@ -140,14 +140,14 @@ namespace BusStation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Passers == null)
+            if (_context.Passangers == null)
             {
-                return Problem("Entity set 'CourseDBContext.Passers'  is null.");
+                return Problem("Entity set 'CourseDBContext.Passangers'  is null.");
             }
-            var passanger = await _context.Passers.FindAsync(id);
+            var passanger = await _context.Passangers.FindAsync(id);
             if (passanger != null)
             {
-                _context.Passers.Remove(passanger);
+                _context.Passangers.Remove(passanger);
             }
             
             await _context.SaveChangesAsync();
@@ -156,7 +156,7 @@ namespace BusStation.Controllers
 
         private bool PassangerExists(int id)
         {
-          return (_context.Passers?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Passangers?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

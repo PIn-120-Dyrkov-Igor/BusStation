@@ -6,16 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BusStation.Models;
+using Microsoft.IdentityModel.Tokens;
+using System.Numerics;
 
 namespace BusStation.Controllers
 {
     public class DriversController : Controller
     {
         private readonly CourseDBContext _context;
+        private readonly IWebHostEnvironment _appEnvironment;
 
-        public DriversController(CourseDBContext context)
+        public DriversController(CourseDBContext context, IWebHostEnvironment appEnvironment)
         {
             _context = context;
+            _appEnvironment = appEnvironment;
         }
 
         // GET: Drivers
@@ -41,6 +45,17 @@ namespace BusStation.Controllers
                 return NotFound();
             }
 
+            if (!driver.Photo.IsNullOrEmpty())
+            {
+                byte[] photodata = System.IO.File.ReadAllBytes(_appEnvironment.WebRootPath + driver.Photo);
+
+                ViewBag.Photodata = photodata;
+            }
+            else
+            {
+                ViewBag.Photodata = null;
+            }
+
             return View(driver);
         }
 
@@ -55,10 +70,21 @@ namespace BusStation.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Surname,Name,Patronymic,DateOfBird,MedecineCard,PhoneNumber,Photo")] Driver driver)
+        public async Task<IActionResult> 
+            Create([Bind("Id,Surname,Name,Patronymic,DateOfBird,MedecineCard,PhoneNumber,Photo")] Driver driver, IFormFile? upload)
         {
             if (ModelState.IsValid)
             {
+                if (upload != null)
+                {
+                    string path = "/Files/" + upload.FileName;
+                    using (var fileStream = new
+                   FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                    {
+                        await upload.CopyToAsync(fileStream);
+                    }
+                    driver.Photo = path;
+                }
                 _context.Add(driver);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -87,7 +113,8 @@ namespace BusStation.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Surname,Name,Patronymic,DateOfBird,MedecineCard,PhoneNumber,Photo")] Driver driver)
+        public async Task<IActionResult> 
+            Edit(int id, [Bind("Id,Surname,Name,Patronymic,DateOfBird,MedecineCard,PhoneNumber,Photo")] Driver driver, IFormFile? upload)
         {
             if (id != driver.Id)
             {
@@ -96,6 +123,20 @@ namespace BusStation.Controllers
 
             if (ModelState.IsValid)
             {
+                if (upload != null)
+                {
+                    string path = "/Files/" + upload.FileName;
+                    using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                    {
+                        await upload.CopyToAsync(fileStream);
+                    }
+                    if (!driver.Photo.IsNullOrEmpty())
+                    {
+                        System.IO.File.Delete(_appEnvironment.WebRootPath + driver.Photo);
+                    }
+                    driver.Photo = path;
+                }
+
                 try
                 {
                     _context.Update(driver);

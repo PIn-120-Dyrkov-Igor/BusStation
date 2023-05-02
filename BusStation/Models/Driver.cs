@@ -19,6 +19,7 @@ namespace BusStation.Models
         public string Patronymic { get; set; }
 
         [Display(Name = "Дата рождения")]
+        [DataType(DataType.Date)]
         public DateTime DateOfBird { get; set; }
 
         [Display(Name = "Номер медицинской карты")]
@@ -26,8 +27,8 @@ namespace BusStation.Models
         public int MedecineCard { get; set; }
 
         [Display(Name = "Номер телефона")]
-        [Range(89000000000, 89999999999, ErrorMessage = "Номер телефона должен содержать 11 цифр")]
-        public int PhoneNumber { get; set; }
+        [RegularExpression(@"^89\d{9}$", ErrorMessage = "Номер телефона должен содержать 11 цифр")]
+        public int? PhoneNumber { get; set; }
 
         [Display(Name = "Фотография водителя")]
         public string? Photo { get; set; }

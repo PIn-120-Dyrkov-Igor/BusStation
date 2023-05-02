@@ -10,6 +10,8 @@ namespace BusStation.Models
         public int? StopId { get; set; }
         public Stop? Stop { get; set; }//Где именно может быть пустым
 
+        //public List<Stop> Stop { get; set; } = new List<Stop>();
+
         [Display(Name = "Название маршрута")]
         public int? RouteId { get; set; }
         public Route? Route { get; set; }

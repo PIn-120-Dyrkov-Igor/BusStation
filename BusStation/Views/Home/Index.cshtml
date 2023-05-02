@@ -2,7 +2,95 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    .button {
+        display: inline-block;
+        margin: 10px;
+        padding: 20px;
+        text-align: center;
+        border: none;
+        background-color: #0077cc;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        text-transform: uppercase;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+    }
+
+        .button img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+
+        .button small {
+            display: block;
+            font-size: 12px;
+            font-weight: normal;
+            margin-top: 10px;
+        }
+</style>
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div>
+        <input type="text" id="field1" placeholder="Город отправления">
+        <button onclick="swapFields()">&#128257;</button>
+        <input type="text" id="field2" placeholder="Город назначения">
+
+        <input type="date" id="date" name="date">
+
+        <button onclick="performAction()">Найти</button>
+
+        <script>
+            //------Код котрый меняет содержимое этих полей местами------
+            function swapFields() {
+                var field1 = document.getElementById("field1").value;
+                var field2 = document.getElementById("field2").value;
+                document.getElementById("field1").value = field2;
+                document.getElementById("field2").value = field1;
+            }
+
+            function performAction() {
+                // Code to perform the desired action
+            }
+
+            //------Код для получения текущей даты------
+            // Получить текущую дату в формате гггг-мм-дд
+            var currentDate = new Date().toISOString().slice(0, 10);
+      
+            // Установить значение поля для ввода даты
+            document.getElementById("date").value = currentDate;
+        </script>
+
+    </div>
+
+    <div>
+        <button class="button">
+            <img src="image1.jpg" alt="Image 1">
+            <div>Муром - Владимир</div>
+            <small>от 100 р.</small>
+        </button>
+
+        <button class="button">
+            <img src="image2.jpg" alt="Image 2">
+            <div>Муром - Москва</div>
+            <small>от 100 р.</small>
+        </button>
+
+        <button class="button">
+            <img src="image3.jpg" alt="Image 3">
+            <div>Муром - Рязань</div>
+            <small>от 100 р.</small>
+        </button>
+
+        <button class="button">
+            <img src="image4.jpg" alt="Image 4">
+            <div>Муром - Нижний новгород</div>
+            <small>от 100 р.</small>
+        </button>
+
+    </div>
 </div>

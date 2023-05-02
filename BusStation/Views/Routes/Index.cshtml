@@ -1,0 +1,53 @@
+﻿@model IEnumerable<BusStation.Models.Route>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RouteNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepertureCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrivalCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TravelTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RouteNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepertureCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TravelTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -9,7 +9,7 @@ namespace BusStation.Models
         
         public int Driver1Id { get; set; }
         [Display(Name = "Первый водитель")]
-        public Driver Driver1 { get; set; }
+        public Driver? Driver1 { get; set; }
 
         
         public int? Driver2Id { get; set; }

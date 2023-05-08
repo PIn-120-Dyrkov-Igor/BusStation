@@ -48,8 +48,11 @@ namespace BusStation.Controllers
         // GET: DriversCompositions/Create
         public IActionResult Create()
         {
-            ViewData["Driver1Id"] = new SelectList(_context.Drivers, "Id", "Id");
-            ViewData["Driver2Id"] = new SelectList(_context.Drivers, "Id", "Id");
+            //List<Driver> drivers = _context.Drivers.ToList();
+            //drivers.Insert(0, new Driver());
+            ViewData["Driver1Id"] = new SelectList(_context.Drivers, "Id", "Name");
+            //ViewData["Driver2Id"] = new SelectList(drivers, "Id", "Name");
+            ViewData["Driver2Id"] = new SelectList(_context.Drivers, "Id", "Name");
             return View();
         }
 
@@ -66,8 +69,10 @@ namespace BusStation.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            List<Driver> drivers = _context.Drivers.ToList();
+            drivers.Insert(0, new Driver());
             ViewData["Driver1Id"] = new SelectList(_context.Drivers, "Id", "Id", driversComposition.Driver1Id);
-            ViewData["Driver2Id"] = new SelectList(_context.Drivers, "Id", "Id", driversComposition.Driver2Id);
+            ViewData["Driver2Id"] = new SelectList(drivers, "Id", "Id", driversComposition.Driver2Id);
             return View(driversComposition);
         }
 

@@ -4,30 +4,37 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<h1>Удаление списка остановок</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Вы уверены, что хотите удалить эту запись?</h3>
 <div>
-    <h4>StopList</h4>
+    <h4>Список остановок</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Stop)
+            @*@Html.DisplayNameFor(model => model.StopId)*@
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Stop.Id)
+            @*@string.Format("{0} ({1})", Model.Stop.StopName, Model.Stop.StopCity)*@
+            @foreach (var stop in Model.Stop)
+            {
+                <div>@string.Format("{0} ({1})", stop.StopName, stop.StopCity)</div>
+            }
+            @*@Html.DisplayFor(model => model.StopId)*@
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Route)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Route.Id)
+            @string.Format("{0} {1} - {2}", Model.Route.RouteNumber, Model.Route.DepertureCity, Model.Route.ArrivalCity)
+            @*@Html.DisplayFor(model => model.Route.RouteNumber)*@
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-action="Index">Вернуться к списку</a>
     </form>
 </div>

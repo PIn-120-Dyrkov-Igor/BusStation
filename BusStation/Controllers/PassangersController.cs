@@ -26,6 +26,29 @@ namespace BusStation.Controllers
                           Problem("Entity set 'CourseDBContext.Passangers'  is null.");
         }
 
+        //----------------------------------------------------------
+        // GET: Passangers Custom View
+        public async Task<IActionResult> IndexManage()
+        {
+            return _context.Passangers != null ?
+                        View(await _context.Passangers.ToListAsync()) :
+                        Problem("Entity set 'CourseDBContext.Passangers'  is null.");
+        }
+
+        // GET: Passangers/Create Custom View
+        public IActionResult CreateCRUD()
+        {
+            Passanger passanger= new Passanger();
+            return PartialView("_PassangerPV", passanger);
+        }
+        public IActionResult CreateCRUD(Passanger passanger)
+        {
+            _context.Passangers.Add(passanger);
+            _context.SaveChanges();
+            return RedirectToAction("IndexManage","Passangers");
+        }
+        //----------------------------------------------------------
+
         // GET: Passangers/Details/5
         public async Task<IActionResult> Details(int? id)
         {

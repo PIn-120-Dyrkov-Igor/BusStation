@@ -8,15 +8,15 @@ namespace BusStation.Models
 
         [Display(Name = "Номер автобуса")]
         public int? BusId { get; set; }
-        public Bus Bus { get; set; }
+        public Bus? Bus { get; set; }
 
         [Display(Name = "Номер маршрута")]
         public int? RouteId { get; set; }
-        public Route Route { get; set; }
+        public Route? Route { get; set; }
 
         [Display(Name = "Состав водителей")]
         public int? DriversCompositionId { get; set; }
-        public DriversComposition DriversComposition { get; set; }
+        public DriversComposition? DriversComposition { get; set; }
 
         [Display(Name = "Количество свободных мест")]
         public int FreeSeatCount { get; set; }

@@ -4,9 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Изменение состава водителей</h1>
 
-<h4>DriversComposition</h4>
+<h4>Состав водителей</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,23 +15,25 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Driver1Id" class="control-label"></label>
-                <select asp-for="Driver1Id" class="form-control" asp-items="ViewBag.Driver1Id"></select>
+                @*<select asp-for="Driver1Id" class="form-control" asp-items="ViewBag.Driver1Id"></select>*@
+                @Html.DropDownList("Driver1Id", ViewData["Driver1Id"] as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="Driver1Id" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Driver2Id" class="control-label"></label>
-                <select asp-for="Driver2Id" class="form-control" asp-items="ViewBag.Driver2Id"></select>
+                @*<select asp-for="Driver2Id" class="form-control" asp-items="ViewBag.Driver2Id"></select>*@
+                @Html.DropDownList("Driver2Id", ViewData["Driver2Id"] as SelectList, "-- Без второго водителя --", new { @class = "form-control" })
                 <span asp-validation-for="Driver2Id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Вернуться к списку</a>
 </div>
 
 @section Scripts {

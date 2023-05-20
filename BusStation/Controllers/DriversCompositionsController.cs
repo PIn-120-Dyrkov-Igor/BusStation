@@ -48,11 +48,17 @@ namespace BusStation.Controllers
         // GET: DriversCompositions/Create
         public IActionResult Create()
         {
-            //List<Driver> drivers = _context.Drivers.ToList();
-            //drivers.Insert(0, new Driver());
-            ViewData["Driver1Id"] = new SelectList(_context.Drivers, "Id", "Name");
-            //ViewData["Driver2Id"] = new SelectList(drivers, "Id", "Name");
-            ViewData["Driver2Id"] = new SelectList(_context.Drivers, "Id", "Name");
+            var drivers = _context.Drivers.ToList();//Custom ViewData FIO
+            var driversList = drivers.Select(driver => new SelectListItem
+            {
+                Value = driver.Id.ToString(),
+                Text = $"{driver.Surname} {driver.Name[0]}. {driver.Patronymic[0]}."
+            });
+
+            ViewData["Driver1Id"] = new SelectList(driversList, "Value", "Text");
+            ViewData["Driver2Id"] = new SelectList(driversList, "Value", "Text");
+            //ViewData["Driver1Id"] = new SelectList(_context.Drivers, "Id", "Name");
+            //ViewData["Driver2Id"] = new SelectList(_context.Drivers, "Id", "Name");
             return View();
         }
 
@@ -89,8 +95,18 @@ namespace BusStation.Controllers
             {
                 return NotFound();
             }
-            ViewData["Driver1Id"] = new SelectList(_context.Drivers, "Id", "Id", driversComposition.Driver1Id);
-            ViewData["Driver2Id"] = new SelectList(_context.Drivers, "Id", "Id", driversComposition.Driver2Id);
+
+            var drivers = _context.Drivers.ToList();//Custom ViewData FIO
+            var driversList = drivers.Select(driver => new SelectListItem
+            {
+                Value = driver.Id.ToString(),
+                Text = $"{driver.Surname} {driver.Name[0]}. {driver.Patronymic[0]}."
+            });
+
+            ViewData["Driver1Id"] = new SelectList(driversList, "Value", "Text", driversComposition.Driver1Id);
+            ViewData["Driver2Id"] = new SelectList(driversList, "Value", "Text", driversComposition.Driver2Id);
+            //ViewData["Driver1Id"] = new SelectList(_context.Drivers, "Id", "Name", driversComposition.Driver1Id);
+            //ViewData["Driver2Id"] = new SelectList(_context.Drivers, "Id", "Name", driversComposition.Driver2Id);
             return View(driversComposition);
         }
 
@@ -126,8 +142,8 @@ namespace BusStation.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Driver1Id"] = new SelectList(_context.Drivers, "Id", "Id", driversComposition.Driver1Id);
-            ViewData["Driver2Id"] = new SelectList(_context.Drivers, "Id", "Id", driversComposition.Driver2Id);
+            ViewData["Driver1Id"] = new SelectList(_context.Drivers, "Id", "Name", driversComposition.Driver1Id);
+            ViewData["Driver2Id"] = new SelectList(_context.Drivers, "Id", "Name", driversComposition.Driver2Id);
             return View(driversComposition);
         }
 

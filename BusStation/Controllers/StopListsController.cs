@@ -21,7 +21,7 @@ namespace BusStation.Controllers
         // GET: StopLists
         public async Task<IActionResult> Index()
         {
-            var courseDBContext = _context.StopLists.Include(s => s.Route).Include(s => s.Stop);
+            var courseDBContext = _context.StopLists.Include(s => s.Route);
             return View(await courseDBContext.ToListAsync());
         }
 
@@ -35,7 +35,6 @@ namespace BusStation.Controllers
 
             var stopList = await _context.StopLists
                 .Include(s => s.Route)
-                .Include(s => s.Stop)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (stopList == null)
             {
@@ -48,8 +47,22 @@ namespace BusStation.Controllers
         // GET: StopLists/Create
         public IActionResult Create()
         {
-            ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Id");
-            ViewData["StopId"] = new SelectList(_context.Stops, "Id", "Id");
+            var stops = _context.Stops.ToList();//Custom ViewData Stop name
+            var stopList = stops.Select(stop => new SelectListItem
+            {
+                Value = stop.Id.ToString(),
+                Text = $"{stop.StopName} ({stop.StopCity})"
+            });
+            ViewData["StopId"] = new SelectList(stopList, "Value", "Text");
+
+            var routes = _context.Routes.ToList();//Custom ViewData Route from-to
+            var routesList = routes.Select(route => new SelectListItem
+            {
+                Value = route.Id.ToString(),
+                Text = $"{route.RouteNumber} {route.DepertureCity} - {route.ArrivalCity}"
+            });
+            ViewData["RouteId"] = new SelectList(routesList, "Value", "Text");
+            //ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "RouteNumber");
             return View();
         }
 
@@ -66,8 +79,7 @@ namespace BusStation.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Id", stopList.RouteId);
-            ViewData["StopId"] = new SelectList(_context.Stops, "Id", "Id", stopList.StopId);
+            ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "RouteNumber", stopList.RouteId);
             return View(stopList);
         }
 
@@ -84,8 +96,23 @@ namespace BusStation.Controllers
             {
                 return NotFound();
             }
-            ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Id", stopList.RouteId);
-            ViewData["StopId"] = new SelectList(_context.Stops, "Id", "Id", stopList.StopId);
+
+            var stops = _context.Stops.ToList();//Custom ViewData Stop name
+            var stopLists = stops.Select(stop => new SelectListItem
+            {
+                Value = stop.Id.ToString(),
+                Text = $"{stop.StopName} ({stop.StopCity})"
+            });
+            ViewData["StopId"] = new SelectList(stopLists, "Value", "Text");
+
+            var routes = _context.Routes.ToList();//Custom ViewData Route from-to
+            var routesList = routes.Select(route => new SelectListItem
+            {
+                Value = route.Id.ToString(),
+                Text = $"{route.RouteNumber} {route.DepertureCity} - {route.ArrivalCity}"
+            });
+            ViewData["RouteId"] = new SelectList(routesList, "Value", "Text");
+            //ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "RouteNumber", stopList.RouteId);
             return View(stopList);
         }
 
@@ -121,8 +148,7 @@ namespace BusStation.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Id", stopList.RouteId);
-            ViewData["StopId"] = new SelectList(_context.Stops, "Id", "Id", stopList.StopId);
+            ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "RouteNumber", stopList.RouteId);
             return View(stopList);
         }
 
@@ -136,7 +162,6 @@ namespace BusStation.Controllers
 
             var stopList = await _context.StopLists
                 .Include(s => s.Route)
-                .Include(s => s.Stop)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (stopList == null)
             {

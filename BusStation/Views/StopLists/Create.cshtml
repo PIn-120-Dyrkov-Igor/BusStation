@@ -4,9 +4,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Добавление списка остановок</h1>
 
-<h4>StopList</h4>
+<h4>Список остановок</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,21 +14,34 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="StopId" class="control-label"></label>
-                <select asp-for="StopId" class ="form-control" asp-items="ViewBag.StopId"></select>
+                @*<input asp-for="StopId" class="form-control" />
+                <span asp-validation-for="StopId" class="text-danger"></span>*@
+
+                @*<select asp-for="StopId" class="form-control" asp-items="ViewBag.StopId"></select>*@
+
+                @*Сверху строка которая использовалась, снизу измененная*@
+
+                @foreach (var item in ViewBag.StopId)
+                {
+                    <div>
+                        <input type="checkbox" name="StopId" value="@item.Value" /> @item.Text
+                    </div>
+                }
+
             </div>
             <div class="form-group">
                 <label asp-for="RouteId" class="control-label"></label>
                 <select asp-for="RouteId" class ="form-control" asp-items="ViewBag.RouteId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Вернуться к списку</a>
 </div>
 
 @section Scripts {

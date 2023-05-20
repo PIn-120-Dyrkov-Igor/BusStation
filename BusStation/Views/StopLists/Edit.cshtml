@@ -4,9 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Изменение списка остановок</h1>
 
-<h4>StopList</h4>
+<h4>Список остановок</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,8 +15,18 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="StopId" class="control-label"></label>
-                <select asp-for="StopId" class="form-control" asp-items="ViewBag.StopId"></select>
-                <span asp-validation-for="StopId" class="text-danger"></span>
+                @*<input asp-for="StopId" class="form-control" />*@ @*Сгенерированная строка*@
+
+                @*<select asp-for="StopId" class="form-control" asp-items="ViewBag.StopId"></select>*@               
+
+                @foreach (var item in ViewBag.StopId)
+                {
+                    <div>
+                        <input type="checkbox" name="StopId" value="@item.Value" @(Model.StopId==(int.Parse(item.Value)) ? "checked" : "") /> @item.Text
+                    </div>
+                }
+
+                @*<span asp-validation-for="StopId" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="RouteId" class="control-label"></label>
@@ -24,16 +34,27 @@
                 <span asp-validation-for="RouteId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Вернуться к списку</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+
+@*<div class="form-group">
+    <label asp-for="StopId" class="control-label">Остановки</label>
+    @foreach (var item in ViewBag.StopId)
+    {
+            <div>
+                <input type="checkbox" name="SelectedStops" value="@item.Value" @(Model.SelectedStops.Contains(int.Parse(item.Value)) ? "checked" : "") /> @item.Text
+            </div>
+    }
+</div>*@

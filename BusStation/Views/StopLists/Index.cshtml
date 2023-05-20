@@ -4,16 +4,17 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Список остановок</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Добавить новый список остановок</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Stop)
+                @*@Html.DisplayNameFor(model => model.StopId)*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Route)
@@ -25,15 +26,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Stop.Id)
+                @Html.DisplayFor(modelItem => item.StopId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Route.Id)
+                @string.Format("{0} {1} - {2}", item.Route.RouteNumber, item.Route.DepertureCity, item.Route.ArrivalCity)
+                @*@Html.DisplayFor(modelItem => item.Route.RouteNumber)*@
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Подробности</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
             </td>
         </tr>
 }

@@ -39,14 +39,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="DateOfBird" class="control-label"></label>
-                <input asp-for="DateOfBird" class="form-control" />
+                <input asp-for="DateOfBird" class="form-control" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="DateOfBird" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Добавить" class="btn btn-primary" />
             </div>

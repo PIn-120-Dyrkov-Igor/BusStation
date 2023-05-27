@@ -30,14 +30,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.DateOfBird)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Email)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model.OrderByDescending((x => x.Id)))
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Surname)
@@ -57,9 +58,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DateOfBird)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Email)
-            </td>
+            </td>*@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Подробности</a> |

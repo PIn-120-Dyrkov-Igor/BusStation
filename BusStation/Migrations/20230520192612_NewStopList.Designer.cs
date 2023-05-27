@@ -4,6 +4,7 @@ using BusStation.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusStation.Migrations
 {
     [DbContext(typeof(CourseDBContext))]
-    partial class CourseDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230520192612_NewStopList")]
+    partial class NewStopList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,7 +35,8 @@ namespace BusStation.Migrations
 
                     b.Property<string>("BusName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
 
                     b.Property<int>("SeatNumber")
                         .HasColumnType("int");
@@ -53,9 +57,8 @@ namespace BusStation.Migrations
                     b.Property<DateTime>("DateOfBird")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("MedecineCard")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MedecineCard")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -66,6 +69,9 @@ namespace BusStation.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<int?>("PhoneNumber")
+                        .HasColumnType("int");
 
                     b.Property<string>("Photo")
                         .HasColumnType("nvarchar(max)");
@@ -122,13 +128,11 @@ namespace BusStation.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("PassportNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PassportNumber")
+                        .HasColumnType("int");
 
-                    b.Property<string>("PassportSeries")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PassportSeries")
+                        .HasColumnType("int");
 
                     b.Property<string>("Patronymic")
                         .IsRequired()

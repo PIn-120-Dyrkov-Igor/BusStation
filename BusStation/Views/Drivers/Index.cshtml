@@ -27,9 +27,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.MedecineCard)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
+            </th>*@
 
             <th></th>
         </tr>
@@ -52,9 +52,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.MedecineCard)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
+            </td>*@
 
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |

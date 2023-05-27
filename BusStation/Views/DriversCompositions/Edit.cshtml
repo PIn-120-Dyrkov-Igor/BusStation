@@ -14,13 +14,13 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Driver1Id" class="control-label"></label>
+                <label asp-for="Driver1Id" class="control-label">Первый водитель</label>
                 @*<select asp-for="Driver1Id" class="form-control" asp-items="ViewBag.Driver1Id"></select>*@
                 @Html.DropDownList("Driver1Id", ViewData["Driver1Id"] as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="Driver1Id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Driver2Id" class="control-label"></label>
+                <label asp-for="Driver2Id" class="control-label">Второй водитель</label>
                 @*<select asp-for="Driver2Id" class="form-control" asp-items="ViewBag.Driver2Id"></select>*@
                 @Html.DropDownList("Driver2Id", ViewData["Driver2Id"] as SelectList, "-- Без второго водителя --", new { @class = "form-control" })
                 <span asp-validation-for="Driver2Id" class="text-danger"></span>

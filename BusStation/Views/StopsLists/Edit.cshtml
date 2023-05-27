@@ -1,0 +1,39 @@
+﻿@model BusStation.Models.StopsList
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Изменение списка остановок</h1>
+
+<h4>Список остановок</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="RouteId" class="control-label">Название маршрута</label>
+                <select asp-for="RouteId" class="form-control" asp-items="ViewBag.RouteId"></select>
+                <span asp-validation-for="RouteId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StopId" class="control-label">Название остановки</label>
+                <select asp-for="StopId" class="form-control" asp-items="ViewBag.StopId"></select>
+                <span asp-validation-for="StopId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Вернуться к списку</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -49,9 +49,17 @@ namespace BusStation.Controllers
         // GET: Trips/Create
         public IActionResult Create()
         {
-            ViewData["BusId"] = new SelectList(_context.Buses, "Id", "Id");
+            var routes = _context.Routes.ToList();//Custom ViewData Route from-to
+            var routesList = routes.Select(route => new SelectListItem
+            {
+                Value = route.Id.ToString(),
+                Text = $"{route.RouteNumber} {route.DepertureCity} - {route.ArrivalCity}"
+            });
+            ViewData["RouteId"] = new SelectList(routesList, "Value", "Text");
+
+            ViewData["BusId"] = new SelectList(_context.Buses, "Id", "BusName");
             ViewData["DriversCompositionId"] = new SelectList(_context.DriversCompositions, "Id", "Id");
-            ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Id");
+            //ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Id");
             return View();
         }
 
@@ -62,6 +70,14 @@ namespace BusStation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,BusId,RouteId,DriversCompositionId,FreeSeatCount,TripDate,TripTime,TripDateArrival,TripTimeArrival")] Trip trip)
         {
+            //Edit for test
+            var travelTime = _context.Routes.Where(r => r.Id == trip.RouteId).Select(r => r.TravelTime).FirstOrDefault();//Получаем время в пути
+            trip.TripTimeArrival = trip.TripTime + travelTime.TimeOfDay;//Время прибытия = время начала движения + время в пути
+            int fr = trip.TripTime.Hour;//время начала движения
+            int to = trip.TripTimeArrival.Hour;//время прибытия
+            if (fr>to) trip.TripDateArrival = trip.TripDate.AddDays(1);//Если (время начала движения > время прибытия)
+            else trip.TripDateArrival = trip.TripDate;
+
             if (ModelState.IsValid)
             {
                 _context.Add(trip);
@@ -104,6 +120,14 @@ namespace BusStation.Controllers
             {
                 return NotFound();
             }
+
+            //Edit for test
+            var travelTime = _context.Routes.Where(r => r.Id == trip.RouteId).Select(r => r.TravelTime).FirstOrDefault();//Получаем время в пути
+            trip.TripTimeArrival = trip.TripTime + travelTime.TimeOfDay;//Время прибытия = время начала движения + время в пути
+            int fr = trip.TripTime.Hour;//время начала движения
+            int to = trip.TripTimeArrival.Hour;//время прибытия
+            if (fr > to) trip.TripDateArrival = trip.TripDate.AddDays(1);//Если (время начала движения > время прибытия)
+            else trip.TripDateArrival = trip.TripDate;
 
             if (ModelState.IsValid)
             {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BusStation.Models;
+using System.Drawing;
 
 namespace BusStation.Controllers
 {
@@ -62,7 +63,7 @@ namespace BusStation.Controllers
                 _context.Add(bus);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            }            
             return View(bus);
         }
 

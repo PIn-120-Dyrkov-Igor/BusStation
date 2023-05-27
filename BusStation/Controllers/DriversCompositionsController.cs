@@ -69,16 +69,26 @@ namespace BusStation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Driver1Id,Driver2Id")] DriversComposition driversComposition)
         {
+            if (driversComposition.Driver1Id == driversComposition.Driver2Id) ModelState.AddModelError("Driver2Id", "Один водитель не может занимать два места");//Если два одинаковых водителя
+
             if (ModelState.IsValid)
             {
                 _context.Add(driversComposition);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            List<Driver> drivers = _context.Drivers.ToList();
-            drivers.Insert(0, new Driver());
-            ViewData["Driver1Id"] = new SelectList(_context.Drivers, "Id", "Id", driversComposition.Driver1Id);
-            ViewData["Driver2Id"] = new SelectList(drivers, "Id", "Id", driversComposition.Driver2Id);
+
+            var drivers = _context.Drivers.ToList();//Custom ViewData FIO
+            var driversList = drivers.Select(driver => new SelectListItem
+            {
+                Value = driver.Id.ToString(),
+                Text = $"{driver.Surname} {driver.Name[0]}. {driver.Patronymic[0]}."
+            });
+
+            ViewData["Driver1Id"] = new SelectList(driversList, "Value", "Text");
+            ViewData["Driver2Id"] = new SelectList(driversList, "Value", "Text");
+            //ViewData["Driver1Id"] = new SelectList(_context.Drivers, "Id", "Name");
+            //ViewData["Driver2Id"] = new SelectList(_context.Drivers, "Id", "Name");
             return View(driversComposition);
         }
 
@@ -122,6 +132,8 @@ namespace BusStation.Controllers
                 return NotFound();
             }
 
+            if (driversComposition.Driver1Id == driversComposition.Driver2Id) ModelState.AddModelError("Driver2Id", "Один водитель не может занимать два места");//Если два одинаковых водителя
+
             if (ModelState.IsValid)
             {
                 try
@@ -142,8 +154,18 @@ namespace BusStation.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Driver1Id"] = new SelectList(_context.Drivers, "Id", "Name", driversComposition.Driver1Id);
-            ViewData["Driver2Id"] = new SelectList(_context.Drivers, "Id", "Name", driversComposition.Driver2Id);
+
+            var drivers = _context.Drivers.ToList();//Custom ViewData FIO
+            var driversList = drivers.Select(driver => new SelectListItem
+            {
+                Value = driver.Id.ToString(),
+                Text = $"{driver.Surname} {driver.Name[0]}. {driver.Patronymic[0]}."
+            });
+
+            ViewData["Driver1Id"] = new SelectList(driversList, "Value", "Text", driversComposition.Driver1Id);
+            ViewData["Driver2Id"] = new SelectList(driversList, "Value", "Text", driversComposition.Driver2Id);
+            //ViewData["Driver1Id"] = new SelectList(_context.Drivers, "Id", "Name", driversComposition.Driver1Id);
+            //ViewData["Driver2Id"] = new SelectList(_context.Drivers, "Id", "Name", driversComposition.Driver2Id);
             return View(driversComposition);
         }
 

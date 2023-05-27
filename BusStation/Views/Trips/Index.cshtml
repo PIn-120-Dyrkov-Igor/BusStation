@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<BusStation.Models.Trip>
+@using BusStation.Models;
+@using BusStation.Data;
+
+
 
 @{
     ViewData["Title"] = "Index";
@@ -43,13 +47,24 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Bus.Id)
+                @Html.DisplayFor(modelItem => item.Bus.BusName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Route.Id)
+                @*@Html.DisplayFor(modelItem => item.Route.Id)*@
+                @string.Format("{0} {1} - {2}", item.Route.RouteNumber, item.Route.DepertureCity, item.Route.ArrivalCity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DriversComposition.Id)
+                @*@Html.DisplayFor(modelItem => item.DriversComposition.Id)*@
+                    @if (item.DriversComposition.Driver2Id != null)
+                    {
+                        @string.Format("{0} - {1}", item.DriversComposition.Driver1Id,item.DriversComposition.Driver2Id)
+                        ;
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.DriversComposition.Id)
+                    }
+                    
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FreeSeatCount)

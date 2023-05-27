@@ -4,6 +4,7 @@ using BusStation.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusStation.Migrations
 {
     [DbContext(typeof(CourseDBContext))]
-    partial class CourseDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230527200815_DriverNoPhone")]
+    partial class DriverNoPhone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,9 +56,8 @@ namespace BusStation.Migrations
                     b.Property<DateTime>("DateOfBird")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("MedecineCard")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MedecineCard")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()

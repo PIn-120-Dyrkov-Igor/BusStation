@@ -6,16 +6,19 @@ namespace BusStation.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "Номер автобуса")]
+        
         public int? BusId { get; set; }
+        [Display(Name = "Номер автобуса")]
         public Bus? Bus { get; set; }
 
-        [Display(Name = "Номер маршрута")]
+        
         public int? RouteId { get; set; }
+        [Display(Name = "Номер маршрута")]
         public Route? Route { get; set; }
 
-        [Display(Name = "Состав водителей")]
+        
         public int? DriversCompositionId { get; set; }
+        [Display(Name = "Состав водителей")]
         public DriversComposition? DriversComposition { get; set; }
 
         [Display(Name = "Количество свободных мест")]

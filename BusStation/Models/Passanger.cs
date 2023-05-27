@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 
 namespace BusStation.Models
 {
@@ -8,29 +7,38 @@ namespace BusStation.Models
         public int Id { get; set; }
 
         [Display(Name = "Фамилия")]
-        [StringLength(20, MinimumLength = 2)]
+        [RegularExpression(@"^[a-zA-Zа-яА-Я]+$", ErrorMessage = "Фамилия должена состоять только из букв русского или английского алфавита")]
+        [StringLength(20, MinimumLength = 2, ErrorMessage = "Длина строки должна быть от 2 до 20 символов.")]
+        [Required(ErrorMessage = "Это поле бязательно для заполнения")]
         public string Surname { get; set; }
 
         [Display(Name = "Имя")]
-        [StringLength(20, MinimumLength = 2)]
+        [RegularExpression(@"^[a-zA-Zа-яА-Я]+$", ErrorMessage = "Имя должена состоять только из букв русского или английского алфавита")]
+        [StringLength(20, MinimumLength = 2, ErrorMessage = "Длина строки должна быть от 2 до 20 символов.")]
+        [Required(ErrorMessage = "Это поле бязательно для заполнения")]
         public string Name { get; set; }
 
         [Display(Name = "Отчество")]
-        [StringLength(20, MinimumLength = 2)]
+        [RegularExpression(@"^[a-zA-Zа-яА-Я]+$", ErrorMessage = "Отчество должена состоять только из букв русского или английского алфавита")]
+        [StringLength(20, MinimumLength = 2, ErrorMessage = "Длина строки должна быть от 2 до 20 символов.")]
+        [Required(ErrorMessage = "Это поле бязательно для заполнения")]
         public string Patronymic { get; set; }
 
         [Display(Name = "Серия паспорта")]
-        [Range(0001, 9999, ErrorMessage = "Серия паспорта должен содержать 6 цифр")]
-        public int PassportSeries { get; set; }
+        [RegularExpression(@"^\d{4}$", ErrorMessage = "Серия паспорта должена содержать 4 цифры")]
+        [Required(ErrorMessage = "Это поле бязательно для заполнения")]
+        public string PassportSeries { get; set; }
 
         [Display(Name = "Номер паспорта")]
-        [Range(000001, 999999, ErrorMessage = "Номер паспорта должен содержать 6 цифр")]
-        public int PassportNumber { get; set; }
+        [RegularExpression(@"^\d{6}$", ErrorMessage = "Номер паспорта должен содержать 6 цифр")]
+        [Required(ErrorMessage = "Это поле бязательно для заполнения")]
+        public string PassportNumber { get; set; }
 
         [Display(Name = "Дата рождения")]
         [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Введите значение меньшее или равное текущей дате")]
         public DateTime DateOfBird { get; set; }
-        //Сделать невидимым
+        //Заносим Email по которому был зарагестрирован пассажир
         public string? Email { get; set; }
     }
 }

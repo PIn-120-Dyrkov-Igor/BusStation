@@ -1,0 +1,35 @@
+﻿@model BusStation.Models.StopsList
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Удаление списка остановок</h1>
+
+<h3>Вы уверены, что хотите удалить эту запись?</h3>
+<div>
+    <h4>Список остановок</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Route)
+        </dt>
+        <dd class = "col-sm-10">
+            @*@Html.DisplayFor(model => model.Route.Id)*@
+            @string.Format("{0} {1} - {2}", Model.Route.RouteNumber, Model.Route.DepertureCity, Model.Route.ArrivalCity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Stop)
+        </dt>
+        <dd class = "col-sm-10">
+            @*@Html.DisplayFor(model => model.Stop.Id)*@
+            @string.Format("{0} ({1})", Model.Stop.StopName, Model.Stop.StopCity)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-action="Index">Вернуться к списку</a>
+    </form>
+</div>

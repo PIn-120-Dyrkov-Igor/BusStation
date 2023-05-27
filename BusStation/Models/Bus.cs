@@ -7,12 +7,13 @@ namespace BusStation.Models
         public int Id { get; set; }
 
         [Display(Name = "Номер автобуса")]
-        [MinLength(3)]
-        [MaxLength(12)]
+        [RegularExpression(@"^[а-яА-Я]\d{3}[а-яА-Я]{2}\d{2,3}", ErrorMessage = "Введите номер автобуса(Формата: А123БВ45)")]
+        [Required(ErrorMessage = "Это поле бязательно для заполнения")]
         public string BusName { get; set; }
 
         [Display(Name = "Количество мест")]
-        [RegularExpression(@"^[2468][0-9]*$", ErrorMessage = "Введите четное число, отличное от нуля")]      
+        [RegularExpression("^(?:2[04]|[34][048])$", ErrorMessage = "Введите число от 20 до 48, кратное 4.")]
+        [Required(ErrorMessage = "Это поле бязательно для заполнения")]
         public int SeatNumber { get; set; }
     }
 }

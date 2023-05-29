@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BusStation.Models
 {
@@ -40,5 +41,8 @@ namespace BusStation.Models
         public DateTime DateOfBird { get; set; }
         //Заносим Email по которому был зарагестрирован пассажир
         public string? Email { get; set; }
+
+        [NotMapped]
+        public bool? ToTakeTickets { get; set; }
     }
 }

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<BusStation.Models.Ticket>
+
+<div class="form-horizontal">
+    <div class="form-inline">
+        <label class="form-label col-md-2">Посетитель (гость)</label>
+        <div class="col-md-10">
+            <label class="form-label">@ViewBag.Passanger</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label col-md-2">Рейс</label>
+        <div class="col-md-10">
+            <label class="form-label">@ViewBag.MatchTitle</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label col-md-2">Время рейса</label>
+        <div class="col-md-10">
+            <label class="form-label">@ViewBag.sessionDate</label>
+        </div>
+    </div>
+
+</div>
+
+<h2>Схема посадки</h2>
+
+<table class="table">
+    <tr>
+        <th>№ ряда</th>
+
+        @for (int i = 1; i <= 4; i++)
+        {
+            <th>@i</th>
+        }
+    </tr>
+    @for (int i = 1; i <= ViewBag.SeatCount / 4; i++)
+    {
+        <tr>
+            <th>@i</th>
+            @for (int j = 1; j <=  4; j++)
+            {
+                int seatNumber = (i - 1) * 4 + j;
+                <th>
+                    <form asp-action="ChooseTicket">
+
+                        @Html.Hidden("PassangerId", ViewBag.PassangerId as string)
+                        @Html.Hidden("SessionDate", ViewBag.SessionDate as string)
+                        @Html.Hidden("RouteId", ViewBag.Route as string)
+                        @Html.Hidden("TripId", ViewBag.Trip as string)
+                        @Html.Hidden("StopId", ViewBag.Stop as string)
+
+                        @Html.Hidden("TicketPlace", seatNumber)
+                        
+                        @if (ViewBag.Seats[ViewBag.SeatCount - 1])
+                        {
+                            <input type="submit" value="@seatNumber" class="btn btn-success">
+                        }
+                        else
+                        {
+                            <input type="submit" value="@seatNumber" class="btn btn-danger" disabled>
+                        }
+
+                    </form>
+                </th>
+            }
+        </tr>
+    }
+</table>

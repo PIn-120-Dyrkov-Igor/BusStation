@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "ComfimBuy";
+}
+
+<h2>Подтверждение покупки билета</h2>
+
+<form asp-action="ConfirmTicketBuy">
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-md-2">Посетитель (гость)</label>
+            <div class="col-md-10">
+                <label class="control-label col-md-10">@ViewBag.Passanger.Name</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Матч</label>
+            <div class="col-md-10">
+                <label class="control-label col-md-10">@ViewBag.Match.To.WayName vs @ViewBag.Match.From.WayName</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Время матча</label>
+            <div class="col-md-10">
+                <label class="control-label col-md-10">@ViewBag.Match.ReyseDate</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Ряд</label>
+            <div class="col-md-10">
+                <label class="control-label col-md-2">@ViewBag.Ticket.RowSeat</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Место</label>
+            <div class="col-md-10">
+                <label class="control-label col-md-10">@ViewBag.Ticket.SeatNumber</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Цена билета</label>
+            <div class="col-md-10">
+                <label class="control-label col-md-10">@ViewBag.Ticket.Price</label>
+            </div>
+        </div>
+
+
+        <input type="hidden" name="passangerId" value="@ViewBag.Passanger.Id" />
+        <input type="hidden" name="ticketId" value="@ViewBag.Ticket.Id" />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Подтвердить" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>

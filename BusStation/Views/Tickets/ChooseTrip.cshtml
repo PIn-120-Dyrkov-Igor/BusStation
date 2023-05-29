@@ -1,0 +1,86 @@
+﻿@model IEnumerable<BusStation.Models.Trip>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Выбор рейса</h1>
+<h4>(ChooseTrip)</h4>
+
+<div class="form-group">
+    <label class="control-label">ФИО покупателя</label>
+    <label class="control-label">@ViewBag.Passanger</label>
+</div>
+
+<div class="form-group">
+    <label class="control-label">Дата рейса:</label>
+    <label class="control-label">@ViewBag.sessionDate</label>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Bus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Route)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FreeSeatCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TripDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TripTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TripDateArrival)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TripTimeArrival)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Bus.BusName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Route.Id)
+                    @*@string.Format("{0} {1} - {2}", item.Route.RouteNumber, item.Route.DepertureCity, item.Route.ArrivalCity)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FreeSeatCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TripDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TripTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TripDateArrival)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TripTimeArrival)
+                </td>
+                <td>
+                    <form asp-action="ChooseTrip">
+                        <input type="hidden" name="PassangerId" value="@ViewBag.PassangerId">
+                        <input type="hidden" name="SessionDate" value="@ViewBag.SessionDate" />
+                        <input type="hidden" name="RouteId" value="@ViewBag.Route">
+                        <input type="hidden" name="TripId" value="@item.Id">
+                        <input type="submit" value="Выбрать" class="btn btn-primary">
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

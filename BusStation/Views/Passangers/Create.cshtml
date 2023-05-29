@@ -47,6 +47,10 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>*@
+
+            @*Переход на покупку билета при создании нового пассажира из этой страницы*@
+            <input type="hidden" asp-for="ToTakeTickets" value="@ViewBag.ToTakeTickets" />
+
             <div class="form-group">
                 <input type="submit" value="Добавить" class="btn btn-primary" />
             </div>

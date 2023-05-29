@@ -24,30 +24,7 @@ namespace BusStation.Controllers
               return _context.Passangers != null ? 
                           View(await _context.Passangers.ToListAsync()) :
                           Problem("Entity set 'CourseDBContext.Passangers'  is null.");
-        }
-
-        //----------------------------------------------------------
-        // GET: Passangers Custom View
-        public async Task<IActionResult> IndexManage()
-        {
-            return _context.Passangers != null ?
-                        View(await _context.Passangers.ToListAsync()) :
-                        Problem("Entity set 'CourseDBContext.Passangers'  is null.");
-        }
-
-        // GET: Passangers/Create Custom View
-        public IActionResult CreateCRUD()
-        {
-            Passanger passanger= new Passanger();
-            return PartialView("_PassangerPV", passanger);
-        }
-        public IActionResult CreateCRUD(Passanger passanger)
-        {
-            _context.Passangers.Add(passanger);
-            _context.SaveChanges();
-            return RedirectToAction("IndexManage","Passangers");
-        }
-        //----------------------------------------------------------
+        }      
 
         // GET: Passangers/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -68,23 +45,37 @@ namespace BusStation.Controllers
         }
 
         // GET: Passangers/Create
-        public IActionResult Create()
+        public IActionResult Create(bool? fromTakeTickets)
         {
+            if (fromTakeTickets == true)
+                ViewBag.ToTakeTickets = true;
+            else
+                ViewBag.ToTakeTickets = false;
+
             return View();
         }
+        /*public IActionResult Create()
+        {
+            return View();
+        }*/
 
         // POST: Passangers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Surname,Name,Patronymic,PassportSeries,PassportNumber,DateOfBird,Email")] Passanger passanger)
+        public async Task<IActionResult> Create([Bind("Id,Surname,Name,Patronymic,PassportSeries,PassportNumber,DateOfBird,Email,ToTakeTickets")] Passanger passanger)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(passanger);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (passanger.ToTakeTickets == true)
+                    return RedirectToAction("Index", "Tickets");
+                else
+                    return RedirectToAction(nameof(Index));
+
+                /*return RedirectToAction(nameof(Index));*/
             }
             return View(passanger);
         }

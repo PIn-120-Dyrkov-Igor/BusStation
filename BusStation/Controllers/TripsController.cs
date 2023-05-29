@@ -77,13 +77,27 @@ namespace BusStation.Controllers
             int to = trip.TripTimeArrival.Hour;//время прибытия
             if (fr>to) trip.TripDateArrival = trip.TripDate.AddDays(1);//Если (время начала движения > время прибытия)
             else trip.TripDateArrival = trip.TripDate;
+           
 
             if (ModelState.IsValid)
             {
                 _context.Add(trip);
+                await _context.SaveChangesAsync();//
+
+                for(int place = 1; place <= trip.FreeSeatCount; place++)
+                {
+                    Ticket ticket = new Ticket
+                    {
+                        Trip = trip,
+                        SeatNumber = place
+                    };
+                    _context.Tickets.Add(ticket);
+                }//
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["BusId"] = new SelectList(_context.Buses, "Id", "Id", trip.BusId);
             ViewData["DriversCompositionId"] = new SelectList(_context.DriversCompositions, "Id", "Id", trip.DriversCompositionId);
             ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Id", trip.RouteId);

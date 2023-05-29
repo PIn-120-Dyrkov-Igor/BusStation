@@ -1,59 +1,34 @@
-﻿@model IEnumerable<BusStation.Models.Ticket>
+﻿@model IEnumerable<BusStation.Models.Passanger>
 
-@{
-    ViewData["Title"] = "Index";
-}
+<h1>Покупка билета</h1>
+<h4>Список пассажиров(Index)</h4>
 
-<h1>Список билетов</h1>
+<div class="form-group">
+    <a asp-controller="Passanger" asp-action="Create" asp-route-fromTakeTickets="true" class="btn btn-info">Создать нового</a>
+</div>
 
-<p>
-    <a asp-action="Create">Добавление нового билета</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TicketNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateSale)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Route)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Trip)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Passanger)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.TicketNumber)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateSale)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Route.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Trip.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Passanger.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Подробности</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                @using (Html.BeginForm())
+                {
+                    <div>
+                        <input type="hidden" name="PassangerId" value="@item.Id" />
+                        <input type="submit" value="Выбрать" class="btn btn-primary" />
+                    </div>
+                }
             </td>
         </tr>
-}
-    </tbody>
+    }
 </table>

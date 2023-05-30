@@ -77,7 +77,8 @@ namespace BusStation.Controllers
             int to = trip.TripTimeArrival.Hour;//время прибытия
             if (fr>to) trip.TripDateArrival = trip.TripDate.AddDays(1);//Если (время начала движения > время прибытия)
             else trip.TripDateArrival = trip.TripDate;
-           
+            trip.FreeSeatCount = _context.Buses.Where(r => r.Id == trip.BusId).Select(r => r.SeatNumber).FirstOrDefault();//Количество мест в автобусе
+
 
             if (ModelState.IsValid)
             {

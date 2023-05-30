@@ -4,54 +4,63 @@
 
 <h2>Подтверждение покупки билета</h2>
 
-<form asp-action="ConfirmTicketBuy">
+<form asp-action="ComfimBuy">
 
     <div class="form-horizontal">
         <div class="form-group">
-            <label class="control-label col-md-2">Посетитель (гость)</label>
+            <label class="control-label col-md-2">Пассажир:</label>
             <div class="col-md-10">
-                <label class="control-label col-md-10">@ViewBag.Passanger.Name</label>
+                <label class="control-label col-md-10">@ViewBag.Passanger.Surname @ViewBag.Passanger.Name @ViewBag.Passanger.Patronymic</label>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">Матч</label>
+            <label class="control-label col-md-2">Номер маршрута:</label>
             <div class="col-md-10">
-                <label class="control-label col-md-10">@ViewBag.Match.To.WayName vs @ViewBag.Match.From.WayName</label>
+                <label class="control-label col-md-10">@ViewBag.RouteModel.RouteNumber</label>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">Время матча</label>
+            <label class="control-label col-md-2">Направление:</label>
             <div class="col-md-10">
-                <label class="control-label col-md-10">@ViewBag.Match.ReyseDate</label>
+                <label class="control-label col-md-10">@ViewBag.RouteModel.DepertureCity - @ViewBag.RouteModel.ArrivalCity</label>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">Ряд</label>
+            <label class="control-label col-md-2">Время в пути:</label>
             <div class="col-md-10">
-                <label class="control-label col-md-2">@ViewBag.Ticket.RowSeat</label>
+                <label class="control-label col-md-10">@ViewBag.RouteModel.TravelTime.TimeOfDay.ToString("hh\\:mm")</label>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">Место</label>
+            <label class="control-label col-md-2">Номер места:</label>
             <div class="col-md-10">
-                <label class="control-label col-md-10">@ViewBag.Ticket.SeatNumber</label>
+        <label class="control-label col-md-10">@ViewBag.SeatNumber</label>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">Цена билета</label>
+            <label class="control-label col-md-2">Название остановки:</label>
             <div class="col-md-10">
-                <label class="control-label col-md-10">@ViewBag.Ticket.Price</label>
+                <label class="control-label col-md-10">@ViewBag.Stop.StopName</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Цена билета:</label>
+            <div class="col-md-10">
+                <label class="control-label col-md-10">@ViewBag.Stop.Price р.</label>
             </div>
         </div>
 
 
         <input type="hidden" name="passangerId" value="@ViewBag.Passanger.Id" />
         <input type="hidden" name="ticketId" value="@ViewBag.Ticket.Id" />
+        <input type="hidden" name="routeId" value="@ViewBag.Route" />
+        <input type="hidden" name="tripId" value="@ViewBag.Trip" />
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

@@ -51,9 +51,9 @@
                         @Html.Hidden("TripId", ViewBag.Trip as string)
                         @Html.Hidden("StopId", ViewBag.Stop as string)
 
-                        @Html.Hidden("TicketPlace", seatNumber)
-                        
-                        @if (ViewBag.Seats[ViewBag.SeatCount - 1])
+                        @Html.Hidden("SeatNumber", seatNumber)
+
+                        @if (ViewBag.Seats[@*ViewBag.SeatCount*@seatNumber - 1])
                         {
                             <input type="submit" value="@seatNumber" class="btn btn-success">
                         }

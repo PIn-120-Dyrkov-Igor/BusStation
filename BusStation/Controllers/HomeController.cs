@@ -23,6 +23,26 @@ namespace BusStation.Controllers
             return View();
         }
 
+        public IActionResult Moscow()
+        {
+            return View();
+        }
+
+        public IActionResult Nizny()
+        {
+            return View();
+        }
+
+        public IActionResult Vladimir()
+        {
+            return View();
+        }
+
+        public IActionResult Ryazan()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -14,7 +14,7 @@
         </th>
         <th></th>
     </tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.Where(p => p.Email == User.Identity.Name).OrderByDescending((x => x.Id)))
     {
         <tr>
             <td>

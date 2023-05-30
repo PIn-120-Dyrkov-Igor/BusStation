@@ -3,94 +3,112 @@
 }
 
 <style>
-    .button {
-        display: inline-block;
-        margin: 10px;
-        padding: 20px;
-        text-align: center;
-        border: none;
+      .button {
+        display: block;
+        width: 100%;
+        height: 200px;
+        position: relative;
         background-color: #0077cc;
         color: white;
+        text-align: center;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+
+      .button img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.7;
+      }
+
+      .button .text-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .button h2 {
         font-size: 24px;
         font-weight: bold;
-        text-transform: uppercase;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-        cursor: pointer;
-    }
+        margin-bottom: 10px;
+      }
 
-        .button img {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 20px;
-        }
+      .button p {
+        font-size: 16px;
+        font-weight: normal;
+      }
 
-        .button small {
-            display: block;
-            font-size: 12px;
-            font-weight: normal;
-            margin-top: 10px;
-        }
-</style>
+      .contact-info {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      
+      .working-hours {
+        margin-top: 20px;
+      }
+      
+      .working-hours p {
+        margin: 5px 0;
+      }
+    </style>
 
 <div class="text-center">
     <h1 class="display-4">Автостанция</h1>
 
     <div>
-        <input type="text" id="field1" placeholder="Город отправления">
-        <button onclick="swapFields()">&#128257;</button>
-        <input type="text" id="field2" placeholder="Город назначения">
+        <a href="/Home/Moscow" class="button">
+            <img src="/Files/moscowImg.jpg" alt="Image 1">
+            <div class="text-container">
+                <h2>Муром - Москва</h2>
+                <p>Списки рейсов и информация о остановках</p>
+            </div>
+        </a>
 
-        <input type="date" id="date" name="date">
+        <a href="/Home/Nizny" class="button">
+            <img src="/Files/niznyImg.jpg" alt="Image 2">
+            <div class="text-container">
+                <h2>Муром - Нижний Новгород</h2>
+                <p>Списки рейсов и информация о остановках</p>
+            </div>
+        </a>
 
-        <button onclick="performAction()">Найти</button>
+        <a href="/Home/Vladimir" class="button">
+            <img src="/Files/vladimirImg.jpg" alt="Image 3">
+            <div class="text-container">
+                <h2>Муром - Владамир</h2>
+                <p>Списки рейсов и информация о остановках</p>
+            </div>
+        </a>
 
-        <script>
-            //------Код котрый меняет содержимое этих полей местами------
-            function swapFields() {
-                var field1 = document.getElementById("field1").value;
-                var field2 = document.getElementById("field2").value;
-                document.getElementById("field1").value = field2;
-                document.getElementById("field2").value = field1;
-            }
-
-            function performAction() {
-                //Поиск выбранных направлений
-            }
-
-            //------Код для получения текущей даты------
-            // Получить текущую дату в формате гггг-мм-дд
-            var currentDate = new Date().toISOString().slice(0, 10);
-      
-            // Установить значение поля для ввода даты
-            document.getElementById("date").value = currentDate;
-        </script>
-
+        <a href="/Home/Ryazan" class="button">
+            <img src="/Files/ryazanImg.jpg" alt="Image 4">
+            <div class="text-container">
+                <h2>Муром - Рязань</h2>
+                <p>Списки рейсов и информация о остановках</p>
+            </div>
+        </a>
     </div>
 
     <div>
-        <button class="button">
-            <img src="image1.jpg" alt="Image 1">
-            <div>Муром - Владимир</div>
-            <small>от 100 р.</small>
-        </button>
-
-        <button class="button">
-            <img src="image2.jpg" alt="Image 2">
-            <div>Муром - Москва</div>
-            <small>от 100 р.</small>
-        </button>
-
-        <button class="button">
-            <img src="image3.jpg" alt="Image 3">
-            <div>Муром - Рязань</div>
-            <small>от 100 р.</small>
-        </button>
-
-        <button class="button">
-            <img src="image4.jpg" alt="Image 4">
-            <div>Муром - Нижний новгород</div>
-            <small>от 100 р.</small>
-        </button>
-
+        <div class="contact-info">
+            <p>Справочная</p>
+            <p>+7 (49234) 3-24-65, +7 (49234) 4-15-71</p>
+        </div>
+    
+        <div class="contact-info">
+          <p>Адрес автовокзала</p>
+          <p>Владимирская область, г. Муром, ул. Московская, д.94</p>
+        </div>
+    
+        <div class="working-hours">
+          <p>Режим работы</p>
+          <p>Ежедневно, 05:00 - 24:00</p>
+          <p>Старший кассир: 05:00 до 17:00</p>
+          <p>Касса №1: 11:00 до 24:00</p>
+          <p>Касса №2: с 07:30 до 19:30</p>
+        </div>
     </div>
+
 </div>

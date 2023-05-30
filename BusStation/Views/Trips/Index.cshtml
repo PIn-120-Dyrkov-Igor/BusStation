@@ -44,7 +44,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model.OrderByDescending((x => x.Id)))
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Bus.BusName)
@@ -57,12 +58,11 @@
                 @*@Html.DisplayFor(modelItem => item.DriversComposition.Id)*@
                     @if (item.DriversComposition.Driver2Id != null)
                     {
-                        @string.Format("{0} - {1}", item.DriversComposition.Driver1Id,item.DriversComposition.Driver2Id)
-                        ;
+                        @string.Format("{0} - {1}", item.DriversComposition.Driver1Id,item.DriversComposition.Driver2Id)                       
                     }
                     else
                     {
-                        @Html.DisplayFor(modelItem => item.DriversComposition.Id)
+                        @Html.DisplayFor(modelItem => item.DriversComposition.Driver1Id)
                     }
                     
             </td>

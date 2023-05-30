@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using BusStation.Data;
 using BusStation.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Quartz;
+using BusStation.Jobs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +39,46 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredLength = 4;
     options.Password.RequiredUniqueChars = 0;
 });
+
+//Builder lab7 ------------
+builder.Services.AddQuartz(q =>
+{
+    q.UseMicrosoftDependencyInjectionJobFactory();
+    var jobKey = new JobKey("ReportSender");    
+
+    q.AddJob<ReportSender>(opts => opts.WithIdentity(jobKey));
+
+    q.AddTrigger(t => t
+    .ForJob(jobKey)
+    .WithIdentity("ReportSender-trigger")
+    .StartNow()/*
+    .WithSimpleSchedule(x => x.WithIntervalInMinutes(1)// настраиваем выполнение действия через 1 минуту
+    .RepeatForever()) // бесконечное повторение*/
+    );  
+}
+);
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+//--------------------------
+
+//Builder lab7 ------------
+builder.Services.AddQuartz(q =>
+{
+    q.UseMicrosoftDependencyInjectionJobFactory();
+    var jobKey = new JobKey("SpamSender");
+
+    q.AddJob<SpamSender>(opts => opts.WithIdentity(jobKey));
+
+    q.AddTrigger(t => t
+    .ForJob(jobKey)
+    .WithIdentity("SpamSender-trigger")
+    .StartNow()/*
+    .WithSimpleSchedule(x => x.WithIntervalInMinutes(1)// настраиваем выполнение действия через 1 минуту
+    .RepeatForever()) // бесконечное повторение*/
+    );
+}
+);
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+//--------------------------
 
 var app = builder.Build();
 

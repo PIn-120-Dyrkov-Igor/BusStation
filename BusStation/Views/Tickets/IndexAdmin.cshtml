@@ -2,13 +2,12 @@
 
 @{
     ViewData["Title"] = "Index";
+
+    var passangerIds = Model.Where(item => item.Passanger.Email == User.Identity.Name).Select(item => item.PassangerId).ToList();
 }
 
 <h1>Список билетов</h1>
 
-<p>
-    <a asp-action="Create">Добавление нового билета</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -19,41 +18,72 @@
                 @Html.DisplayNameFor(model => model.DateSale)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Route)
+                @*@Html.DisplayNameFor(model => model.Route)*@
+                <label>Маршруты</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Trip)
+                @*@Html.DisplayNameFor(model => model.Trip)*@
+                <label>Дата рейса</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Passanger)
+                @*@Html.DisplayNameFor(model => model.Passanger)*@
+                <label>Пассажиры</label>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TicketNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateSale)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Route.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Trip.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Passanger.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Подробности</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
-            </td>
-        </tr>
-}
+        @if (User.IsInRole("admin"))
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TicketNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateSale)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Route.Id)*@
+                        @string.Format("{0} - {1}", item.Route.DepertureCity, item.Route.ArrivalCity)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Trip.Id)*@
+                        @string.Format("{0} - {1}", item.Trip.TripDate.ToShortDateString(), item.Trip.TripTime.TimeOfDay)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Passanger.Id)*@
+                        @string.Format("{0} {1}. {2}.", item.Passanger.Surname, item.Passanger.Name[0], item.Passanger.Patronymic[0])
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            @foreach (var item in Model.Where(item => passangerIds.Contains(item.PassangerId)))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TicketNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateSale)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Route.Id)*@
+                        @string.Format("{0} - {1}", item.Route.DepertureCity, item.Route.ArrivalCity)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Trip.Id)*@
+                        @string.Format("{0} - {1}", item.Trip.TripDate.ToShortDateString(), item.Trip.TripTime.TimeOfDay)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Passanger.Id)*@
+                        @string.Format("{0} {1}. {2}.", item.Passanger.Surname, item.Passanger.Name[0], item.Passanger.Patronymic[0])
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>

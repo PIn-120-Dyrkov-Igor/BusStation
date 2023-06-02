@@ -9,9 +9,12 @@
 <p>
     <a asp-action="Create">Добавить нового пассажира</a>
 </p>
-<p>
-    <a asp-action="GetReport">Сохранить отчет</a>
-</p>
+@if (User.IsInRole("admin"))
+{
+    <p>
+        <a asp-action="GetReport">Сохранить отчет</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -40,36 +43,74 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Where(p => p.Email == User.Identity.Name).OrderByDescending((x => x.Id)))
+        @if (User.IsInRole("admin"))
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Surname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Patronymic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PassportSeries)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PassportNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfBird)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Email)
+            @foreach (var item in Model.OrderByDescending((x => x.Id)))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Patronymic)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PassportSeries)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PassportNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfBird)
+                    </td>
+                    @*<td>
+            @Html.DisplayFor(modelItem => item.Email)
             </td>*@
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Подробности</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
-            </td>
-        </tr>
-}
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Подробности</a> |
+                        @*<a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>*@
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            @foreach (var item in Model.Where(p => p.Email == User.Identity.Name).OrderByDescending((x => x.Id)))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Patronymic)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PassportSeries)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PassportNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfBird)
+                    </td>
+                    @*<td>
+            @Html.DisplayFor(modelItem => item.Email)
+            </td>*@
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Подробности</a> |
+                        @*<a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>*@
+                    </td>
+                </tr>
+            }
+        
+        }
     </tbody>
 </table>

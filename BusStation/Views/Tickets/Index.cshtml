@@ -1,24 +1,36 @@
 ﻿@model IEnumerable<BusStation.Models.Passanger>
 
 <h1>Покупка билета</h1>
-<h4>Список пассажиров(Index)</h4>
+<h4>Список пассажиров</h4>
 
 <div class="form-group">
-    <a asp-controller="Passanger" asp-action="Create" asp-route-fromTakeTickets="true" class="btn btn-info">Создать нового</a>
+    <a asp-controller="Passangers" asp-action="Create" asp-route-fromTakeTickets="true" class="btn btn-info">Создать нового</a>
 </div>
 
 <table class="table table-bordered table-hover">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
+                @Html.DisplayNameFor(model => model.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patronymic)
+            </th>
         <th></th>
     </tr>
     @foreach (var item in Model.Where(p => p.Email == User.Identity.Name).OrderByDescending((x => x.Id)))
     {
         <tr>
+           <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patronymic)
             </td>
             <td>
                 @using (Html.BeginForm())

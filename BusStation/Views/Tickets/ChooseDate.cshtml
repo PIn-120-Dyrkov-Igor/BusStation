@@ -1,12 +1,11 @@
 ﻿<h2>Оформление билета: выбор даты</h2>
-<h4>(ChooseDate)</h4>
 
 <form asp-action="ChooseDate" class="form-group">
     <input type="hidden" name="PassangerId" value="@ViewBag.PassangerId" />
 
     <div class="form-group">
         <label class="control-label">ФИО покупателя:</label>
-        <label class="control-label">@ViewBag.Passanger.Name</label>
+        <label class="control-label">@ViewBag.Passanger.Surname @ViewBag.Passanger.Name @ViewBag.Passanger.Patronymic</label>
     </div>
 
     <div class="form-inline">

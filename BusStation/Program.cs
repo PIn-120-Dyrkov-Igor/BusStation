@@ -6,6 +6,7 @@ using BusStation.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Quartz;
 using BusStation.Jobs;
+using Quartz.Impl;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,6 +80,7 @@ builder.Services.AddQuartz(q =>
 );
 builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 //--------------------------
+
 
 var app = builder.Build();
 

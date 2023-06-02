@@ -7,16 +7,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BusStation.Models;
 using System.Net.Sockets;
+using Quartz;
+using Quartz.Impl;
+using BusStation.Jobs;
+using Microsoft.AspNetCore.Identity;
 
 namespace BusStation.Controllers
 {
     public class TicketsController : Controller
     {
         private readonly CourseDBContext _context;
+        private readonly ISchedulerFactory _schedulerFactory;//Ticket Sender
 
-        public TicketsController(CourseDBContext context)
+        public TicketsController(CourseDBContext context, ISchedulerFactory schedulerFactory)
         {
             _context = context;
+            _schedulerFactory = schedulerFactory;//Ticket Sender
         }
 
         // GET: Tickets
@@ -46,7 +52,7 @@ namespace BusStation.Controllers
           
             ViewBag.PassangerId = passangerId;
             ViewBag.sessionDate = sessionDate.ToLongDateString();
-            ViewBag.Passanger = passanger.Name;
+            ViewBag.Passanger = passanger;
             /*return View("ChooseRoute", await _context.Routes.ToListAsync());*/
             return View("ChooseRoute", await _context.Routes.ToListAsync());
         }
@@ -63,7 +69,7 @@ namespace BusStation.Controllers
 
             ViewBag.PassangerId = passangerId;
             ViewBag.sessionDate = sessionDate.ToLongDateString();
-            ViewBag.Passanger = passanger.Name;
+            ViewBag.Passanger = passanger;
             ViewBag.Route = routeId;
             return View("ChooseTrip", Trips);
         }
@@ -182,6 +188,7 @@ namespace BusStation.Controllers
             ticket.TicketNumber = maxTicketNumber + 1;
 
             _context.SaveChanges();
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -341,7 +348,7 @@ namespace BusStation.Controllers
         // GET: Tickets //After multiple actions controllers 
         public async Task<IActionResult> IndexAdmin()
         {
-            var courseDBContext = _context.Tickets.Include(t => t.Passanger).Include(t => t.Route).Include(t => t.Trip);
+            var courseDBContext = _context.Tickets.Include(t => t.Passanger).Include(t => t.Route).Include(t => t.Trip).Where(t => t.Passanger.Id != null);
             return View(await courseDBContext.ToListAsync());
         }
     }

@@ -77,16 +77,16 @@ namespace BusStation.Jobs
             }
             PrepareReport();
             // отправитель - устанавливаем адрес и отображаемое в письме имя
-            MailAddress from = new MailAddress("hell-resster@mail.ru", "Имя отправителя");
+            MailAddress from = new MailAddress("hell-resster@mail.ru", "BusStation");
             // кому отправляем
             //MailAddress to = new MailAddress("zdixd@mail.ru");//TO send
             MailAddress to = new MailAddress("hell-resster@mail.ru");//TO send
             // создаем объект сообщения
             MailMessage m = new MailMessage(from, to);
             // тема письма
-            m.Subject = "Тест";
+            m.Subject = "Еженедельное оповещение";
             // текст письма
-            m.Body = "<h2>Письмо-тест работы smtp-клиента</h2>";
+            m.Body = "<h2>Обновленный список всех пассажиров</h2>";
             // письмо представляет код html
             m.IsBodyHtml = true;
             // адрес smtp-сервера и порт, с которого будем отправлять письмо

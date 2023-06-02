@@ -28,14 +28,14 @@
                 <select asp-for="DriversCompositionId" class="form-control" asp-items="ViewBag.DriversCompositionId"></select>
                 <span asp-validation-for="DriversCompositionId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+@*            <div class="form-group">
                 <label asp-for="FreeSeatCount" class="control-label"></label>
                 <input asp-for="FreeSeatCount" class="form-control" />
                 <span asp-validation-for="FreeSeatCount" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="TripDate" class="control-label"></label>
-                <input asp-for="TripDate" class="form-control" />
+                <input asp-for="TripDate" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="TripDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -43,7 +43,7 @@
                 <input asp-for="TripTime" class="form-control" />
                 <span asp-validation-for="TripTime" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="TripDateArrival" class="control-label"></label>
                 <input asp-for="TripDateArrival" class="form-control" />
                 <span asp-validation-for="TripDateArrival" class="text-danger"></span>
@@ -52,7 +52,7 @@
                 <label asp-for="TripTimeArrival" class="control-label"></label>
                 <input asp-for="TripTimeArrival" class="form-control" />
                 <span asp-validation-for="TripTimeArrival" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Сохранить" class="btn btn-primary" />
             </div>

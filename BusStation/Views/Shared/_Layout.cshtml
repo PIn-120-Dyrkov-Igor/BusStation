@@ -21,10 +21,41 @@
                     <ul class="navbar-nav flex-grow-1">
                         
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                         </li>
 
-                        <li class="nav-item dropdown">
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Модели
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Passangers" asp-action="Index">Пассажиры</a></li>
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Drivers" asp-action="Index">Водители</a></li>
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="DriversCompositions" asp-action="Index">Состав водителей</a></li>
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Buses" asp-action="Index">Автобусы</a></li>
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Stops" asp-action="Index">Остановки</a></li>
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="StopsLists" asp-action="Index">Список остановок</a></li>
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Routes" asp-action="Index">Маршруты</a></li>
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Trips" asp-action="Index">Рейсы</a></li>
+                                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Tickets" asp-action="IndexAdmin">Билеты</a></li>
+
+                                </ul>
+                            </li>
+                        }
+                        else if (User.IsInRole("worker"))
+                        {
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Passangers" asp-action="Index">Пассажиры</a></li>
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Tickets" asp-action="Index">Продажа билетов</a></li>
+                        }
+                        else if (User.IsInRole("buyer"))
+                        {
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Tickets" asp-action="Index">Покупка билетов</a></li>
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Tickets" asp-action="IndexAdmin">Билеты</a></li>
+                        }
+
+                        @*<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Модели
                             </a>
@@ -41,10 +72,12 @@
                                 <li><a class="nav-link text-dark" asp-area="" asp-controller="Tickets" asp-action="Index">Билеты</a></li>
                                
                             </ul>
-                        </li>
+                        </li>*@
+
+
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Политика кофиденциальности</a>
                         </li>                       
 
                     </ul>
@@ -63,7 +96,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - BusStation - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - BusStation - <a asp-area="" asp-controller="Home" asp-action="Privacy">Политика кофиденциальности</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

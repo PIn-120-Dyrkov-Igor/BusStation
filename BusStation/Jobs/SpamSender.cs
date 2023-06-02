@@ -34,16 +34,16 @@ namespace BusStation.Jobs
                     string email = passenger.Email;
 
                     // отправитель - устанавливаем адрес и отображаемое в письме имя
-                    MailAddress from = new MailAddress("hell-resster@mail.ru", "Имя отправителя");
+                    MailAddress from = new MailAddress("hell-resster@mail.ru", "BusStation");
                     // кому отправляем
                     //MailAddress to = new MailAddress("zdixd@mail.ru");//TO send
                     MailAddress to = new MailAddress(email);//TO send
                     // создаем объект сообщения
                     MailMessage m = new MailMessage(from, to);
                     // тема письма
-                    m.Subject = "Тест rassilki bez fayla";
+                    m.Subject = "Еженедельное оповещение";
                     // текст письма
-                    m.Body = "<h2>Письмо-тест работы smtp-клиента</h2>";
+                    m.Body = "<h2>Успейте купить билеты заранее!</h2>";
                     // письмо представляет код html
                     m.IsBodyHtml = true;
                     // адрес smtp-сервера и порт, с которого будем отправлять письмо

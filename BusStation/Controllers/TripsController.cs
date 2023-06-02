@@ -118,9 +118,19 @@ namespace BusStation.Controllers
             {
                 return NotFound();
             }
-            ViewData["BusId"] = new SelectList(_context.Buses, "Id", "Id", trip.BusId);
+            var routes = _context.Routes.ToList();//Custom ViewData Route from-to
+            var routesList = routes.Select(route => new SelectListItem
+            {
+                Value = route.Id.ToString(),
+                Text = $"{route.RouteNumber} {route.DepertureCity} - {route.ArrivalCity}"
+            });
+            ViewData["RouteId"] = new SelectList(routesList, "Value", "Text");
+
+            ViewData["BusId"] = new SelectList(_context.Buses, "Id", "BusName");
+            ViewData["DriversCompositionId"] = new SelectList(_context.DriversCompositions, "Id", "Id");
+            /*ViewData["BusId"] = new SelectList(_context.Buses, "Id", "Id", trip.BusId);
             ViewData["DriversCompositionId"] = new SelectList(_context.DriversCompositions, "Id", "Id", trip.DriversCompositionId);
-            ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Id", trip.RouteId);
+            ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Id", trip.RouteId);*/
             return View(trip);
         }
 
